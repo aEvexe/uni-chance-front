@@ -1,0 +1,10 @@
+name: uni-chance-frontend
+services:
+  frontend:
+    container_name: uni-chance-frontend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:80
+    restart: always
