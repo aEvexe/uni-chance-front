@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = axios.create({ baseURL: '/v1', withCredentials: true });
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/v1', withCredentials: true });
 
 // No request interceptor needed — cookies are sent automatically
 
