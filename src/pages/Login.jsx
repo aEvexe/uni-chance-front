@@ -144,7 +144,8 @@ export default function Login() {
   }
 
   function oauthLogin(provider) {
-    window.location.href = `/v1/auth/${provider}`;
+    const apiBase = (import.meta.env.VITE_API_URL || 'http://localhost:5500/v1');
+    window.location.href = `${apiBase}/auth/${provider}`;
   }
 
   return (
