@@ -134,7 +134,7 @@ export default function Login() {
     setError(''); setSuccess('');
     setLoading(true);
     try {
-      await api.post('/auth/register', { name: regName, email: regEmail, password: regPassword });
+      await api.post('/auth/register', { firstName: regName, email: regEmail, password: regPassword });
       navigate('/verify', { state: { email: regEmail } });
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
