@@ -168,32 +168,39 @@ export default function Predictions() {
   const [loadingList, setLoadingList] = useState(true);
   const [showForm, setShowForm] = useState(!!prefillUniId);
 
-  // form state
+  // form state — restore from sessionStorage on mount
+  const saved = (() => { try { return JSON.parse(sessionStorage.getItem('predictionForm') || '{}'); } catch { return {}; } })();
   const [university, setUniversity] = useState(
-    prefillUniId ? { id: prefillUniId, name: prefillUniName || '' } : null
+    prefillUniId ? { id: prefillUniId, name: prefillUniName || '' } : saved.university || null
   );
-  const [major, setMajor] = useState('');
+  const [major, setMajor] = useState(saved.major || '');
   const [majorSuggestions, setMajorSuggestions] = useState([]);
   const [majorDropdownOpen, setMajorDropdownOpen] = useState(false);
-  const [exams, setExams] = useState([]);
-  const [activities, setActivities] = useState([]);
-  const [honors, setHonors] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState(NOW.getMonth() + 1);
-  const [currentYear, setCurrentYear] = useState(NOW.getFullYear());
-  const [applyMonth, setApplyMonth] = useState(1);
-  const [applyYear, setApplyYear] = useState(NOW.getFullYear() + 1);
+  const [exams, setExams] = useState(saved.exams || []);
+  const [activities, setActivities] = useState(saved.activities || []);
+  const [honors, setHonors] = useState(saved.honors || []);
+  const [currentMonth, setCurrentMonth] = useState(saved.currentMonth || NOW.getMonth() + 1);
+  const [currentYear, setCurrentYear] = useState(saved.currentYear || NOW.getFullYear());
+  const [applyMonth, setApplyMonth] = useState(saved.applyMonth || 1);
+  const [applyYear, setApplyYear] = useState(saved.applyYear || NOW.getFullYear() + 1);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
 
+  // persist form state to sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem('predictionForm', JSON.stringify({
+      university, major, exams, activities, honors, currentMonth, currentYear, applyMonth, applyYear
+    }));
+  }, [university, major, exams, activities, honors, currentMonth, currentYear, applyMonth, applyYear]);
+
   const loadPredictions = useCallback(async () => {
-    if (!userId) return;
     setLoadingList(true);
     try {
-      const res = await api.get(`/predictions/user/${userId}`);
+      const res = await api.get('/predictions/me');
       setPredictions(res.data?.data || res.data || []);
     } catch {}
     finally { setLoadingList(false); }
-  }, [userId]);
+  }, []);
 
   useEffect(() => { loadPredictions(); }, [loadPredictions]);
 
@@ -253,6 +260,7 @@ export default function Predictions() {
       const createRes = await api.post('/predictions', payload);
       const predId = createRes.data?._id || createRes.data?.id;
       await api.post(`/predictions/${predId}/predict`);
+      sessionStorage.removeItem('predictionForm');
       setShowForm(false);
       await loadPredictions();
       navigate(`/predictions/${predId}`);
