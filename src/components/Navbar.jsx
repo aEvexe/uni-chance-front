@@ -48,7 +48,7 @@ export default function Navbar() {
       <Link to="/" className="navbar-brand">
         <span style={{ position: 'relative', display: 'inline-block' }}>
           Uni-chance
-          {isPremium && <svg style={{ width: 18, height: 18, position: 'absolute', top: -12, right: -14 }} viewBox="0 0 24 24" fill="#c4a44a"><path d="M2.5 19h19v2h-19v-2zm19.57-9.36c-.21-.8-1.04-1.28-1.84-1.06L14.92 10l-2.79-6.15a1.5 1.5 0 0 0-2.73-.02L6.61 10 1.34 8.62c-.81-.22-1.64.26-1.85 1.06-.1.39-.03.8.2 1.13l4.43 6.19h15.76l4.43-6.19c.24-.33.3-.74.2-1.13z"/></svg>}
+          {isPremium && <svg style={{ width: 18, height: 18, position: 'absolute', top: -12, right: -14, transform: 'rotate(25deg)' }} viewBox="0 0 24 24" fill="#c4a44a"><path d="M2.5 19h19v2h-19v-2zm19.57-9.36c-.21-.8-1.04-1.28-1.84-1.06L14.92 10l-2.79-6.15a1.5 1.5 0 0 0-2.73-.02L6.61 10 1.34 8.62c-.81-.22-1.64.26-1.85 1.06-.1.39-.03.8.2 1.13l4.43 6.19h15.76l4.43-6.19c.24-.33.3-.74.2-1.13z"/></svg>}
         </span>
       </Link>
       <div className="navbar-nav">
