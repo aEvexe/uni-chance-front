@@ -227,7 +227,6 @@ export default function Predictions() {
     setSubmitting(true);
     try {
       const payload = {
-        userId,
         universityId: university.id,
         major,
         status: 'PENDING',
