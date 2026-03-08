@@ -8,7 +8,7 @@ export default function Navbar() {
   const location = useLocation();
   const userId = localStorage.getItem('userId');
   const [hidden, setHidden] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
+  const [isPremium, setIsPremium] = useState(localStorage.getItem('isPremium') === 'true');
   const lastY = useRef(0);
 
   useEffect(() => {
@@ -24,7 +24,11 @@ export default function Navbar() {
   useEffect(() => {
     if (!userId) return;
     api.get('/subscribtions/my')
-      .then(res => { if (res.data && res.data.status === 'Active') setIsPremium(true); })
+      .then(res => {
+        const active = res.data && res.data.status === 'Active';
+        setIsPremium(active);
+        localStorage.setItem('isPremium', active ? 'true' : 'false');
+      })
       .catch(() => {});
   }, [userId]);
 
@@ -32,6 +36,7 @@ export default function Navbar() {
     try { await api.post('/auth/logout'); } catch {}
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
+    localStorage.removeItem('isPremium');
     navigate('/login');
   }
 
