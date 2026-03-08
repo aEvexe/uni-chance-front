@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import api from '../api.js';
-import crownImg from '../assets/pngtree-golden-crown-vector-design-png-image_5415535.jpg';
+import crownImg from '../assets/hd-realistic-gold-king-crown-png-704081695122733mzs7cerwxf.png';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function Navbar() {
       <Link to="/" className="navbar-brand">
         <span style={{ position: 'relative', display: 'inline-block' }}>
           Uni-chance
-          {isPremium && <img src={crownImg} alt="Premium" title="Premium Member" style={{ width: 20, height: 20, position: 'absolute', top: -12, right: -16, transform: 'rotate(20deg)', mixBlendMode: 'multiply' }} />}
+          {isPremium && <img src={crownImg} alt="Premium" title="Premium Member" style={{ width: 22, height: 22, position: 'absolute', top: -14, right: -16, transform: 'rotate(20deg)' }} />}
         </span>
       </Link>
       <div className="navbar-nav">
