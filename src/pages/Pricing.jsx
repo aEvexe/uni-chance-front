@@ -86,6 +86,8 @@ export default function Pricing() {
           </div>
         )}
 
+        {paymentStatus !== 'success' && (
+        <>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <h1 style={{ color: '#ece3d5', fontSize: '2rem', marginBottom: 8 }}>
             Upgrade to Premium
@@ -214,6 +216,8 @@ export default function Pricing() {
         }}>
           Secure payment powered by Stripe. Cancel anytime.
         </div>
+        </>
+        )}
       </div>
     </>
   );
