@@ -9,6 +9,7 @@ export default function Pricing() {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(null);
+  const [isPremium, setIsPremium] = useState(false);
   const paymentStatus = searchParams.get('payment');
 
   useEffect(() => {
@@ -19,6 +20,9 @@ export default function Pricing() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+    api.get('/subscribtions/my')
+      .then(res => { if (res.data && res.data.status === 'Active') setIsPremium(true); })
+      .catch(() => {});
   }, []);
 
   async function handleSubscribe(planId) {
@@ -86,7 +90,20 @@ export default function Pricing() {
           </div>
         )}
 
-        {paymentStatus !== 'success' && (
+        {isPremium && !paymentStatus && (
+          <div className="msg msg-success" style={{ marginBottom: 20, textAlign: 'center' }}>
+            You are a Premium member! Enjoy unlimited predictions.
+            <button
+              className="btn btn-purple btn-sm"
+              style={{ marginLeft: 12 }}
+              onClick={() => navigate('/predictions')}
+            >
+              Go to Predictions
+            </button>
+          </div>
+        )}
+
+        {!isPremium && paymentStatus !== 'success' && (
         <>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <h1 style={{ color: '#ece3d5', fontSize: '2rem', marginBottom: 8 }}>

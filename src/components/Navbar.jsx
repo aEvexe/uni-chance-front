@@ -43,7 +43,10 @@ export default function Navbar() {
   return (
     <nav className={`navbar${hidden ? ' navbar-hidden' : ''}`}>
       <Link to="/" className="navbar-brand">
-        Uni-chance{isPremium && <img src={crownImg} alt="Premium" title="Premium Member" style={{ width: 22, height: 22, marginLeft: 6, verticalAlign: 'middle' }} />}
+        <span style={{ position: 'relative', display: 'inline-block' }}>
+          Uni-chance
+          {isPremium && <img src={crownImg} alt="Premium" title="Premium Member" style={{ width: 20, height: 20, position: 'absolute', top: -12, right: -16, transform: 'rotate(20deg)', mixBlendMode: 'multiply' }} />}
+        </span>
       </Link>
       <div className="navbar-nav">
         <Link to="/" className={`navbar-link${isActive('/') ? ' active' : ''}`}>HOME</Link>
